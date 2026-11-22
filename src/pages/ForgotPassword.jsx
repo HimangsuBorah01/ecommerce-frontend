@@ -11,17 +11,19 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
     try {
       await auth.resetPasswordRequest(email);
-    } catch {
-      // Always show success regardless
+      setSent(true);
+    } catch (err) {
+      setError(err.message || "Failed to send reset email");
     } finally {
       setLoading(false);
-      setSent(true);
     }
   };
 
@@ -37,6 +39,11 @@ export default function ForgotPassword() {
         </Link>
       }
     >
+      {error && (
+        <div className="mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm border border-red-100">
+          {error}
+        </div>
+      )}
       {sent ? (
         <p className="text-sm text-foreground text-center">
           If an account exists with that email, you'll receive a password reset
