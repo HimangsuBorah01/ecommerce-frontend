@@ -53,15 +53,18 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(!!realUser);
       setAuthError(null);
     } catch (error) {
-      removeToken();
-      setUser(null);
-      setIsAuthenticated(false);
+      // Only clear the token on real auth failures (401/403). A transient
+      // network error must not log the user out — keep the token so the app
+      // can retry once the backend is reachable again.
       if (error?.status === 401 || error?.status === 403) {
+        removeToken();
         setAuthError({
           type: "auth_required",
           message: "Authentication required",
         });
       }
+      setUser(null);
+      setIsAuthenticated(false);
     } finally {
       setIsLoadingAuth(false);
       setAuthChecked(true);
