@@ -128,6 +128,18 @@ export default function OrderDetail() {
   };
 
   const payNowMutation = useMutation({
+    /**
+     * @param {Object} order - The order to pay for
+     * @param {string|number} order._id - Order ID
+     * @param {string|number} [order.id] - Alternate order ID
+     * @param {number} [order.totalAmount] - Order total amount
+     * @param {number} [order.total] - Order total
+     * @param {number} [order.totalPrice] - Order total price
+     * @param {Object} [order.shippingAddress] - Shipping address for prefill
+     * @param {string} [order.paymentMethod] - Payment method
+     * @param {string} [order.paymentStatus] - Payment status
+     * @returns {Promise<Object>}
+     */
     mutationFn: async (order) => {
       const paymentRes = await api.post("/payment/order", {
         orderId: order._id || order.id,
