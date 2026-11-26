@@ -74,8 +74,8 @@ export default function SearchResults() {
     else p.delete("minPrice");
     if (max) p.set("maxPrice", max);
     else p.delete("maxPrice");
+    p.delete("page");
     setSearchParams(p);
-    setPageParam(1);
   };
 
   const applyCustomPrice = () => {
@@ -212,8 +212,8 @@ export default function SearchResults() {
     const p = new URLSearchParams(searchParams);
     if (val) p.set(key, val);
     else p.delete(key);
+    p.delete("page");
     setSearchParams(p);
-    setPageParam(1);
   };
 
   const clearAll = () => {
