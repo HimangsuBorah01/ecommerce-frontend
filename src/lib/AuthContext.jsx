@@ -8,7 +8,7 @@ import React, {
 import auth from "@/api/authClient";
 import { getToken, setToken, removeToken } from "@/lib/api";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 /**
  * Normalize the user object returned by the backend `/auth/me` endpoint.
